@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Todo liste avec VueJS</title>
+
+    <script src="lib/vue.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    
+</head>
+
+<body>
+    <div id="app">
+        <br>
+        <center>
+                <h2>Liste des restaurants</h2></br>
+        <b>taille de page:</b>
+        <select v-model="pagesize" v-on:click="getDataFromWebService">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+        </select> 
+        <input type="text" v-model="input">
+        <button v-on:click="RechercherRestaurant">Rechercher</button>
+        </br></br>
+
+        <input v-model="NewName" >  
+        <input v-model="NEwCuisine" >
+        <button v-on:click="ajouterRestaurant(NewName,NEwCuisine)">Ajouter restaurant</button>
+
+        <table class="pure-table pure-table-horizontal" id="tableRestaurants">
+        <thead>
+            <th><button v-on:click="ajouterRestaurant(NewName,NEwCuisine)" id="btRetour">Retour</button></th><th></th>
+            <th><h3>restaurant_id</h3></th>
+            <th><h3>Name</h3></th>
+            <th><h3>Spécialité</h3></th>
+        </thead>
+        <tbody>
+            <tr v-for="(restaurant, index) in restaurants"   v-bind:style="{color:getColor(index)}">
+                <td> <button v-on:click="removeRestaurant(restaurant._id,index)" id="btSupp">Supprimer</button></td>
+                <td> <button v-on:click="updateRestaurant(restaurant._id,restaurant.name,restaurant.cuisine)" id="btUpdate">Modifier</button></td> 
+                <td><b>{{restaurant._id}}</b></td> 
+                <td><b><input v-model="restaurant.name" ></b></td> 
+                <td><b><input v-model="restaurant.cuisine" ></b></td>
+                 
+            </tr> 
+        </tbody>
+        </table></br>
+        
+        <button v-on:click="PagePrecedente()">Précedent</button>
+        <button v-on:click="PageSuivante()">Suivant</button> 
+    </center>
+    </div>
+      
+
+</body>
+
+</html>
